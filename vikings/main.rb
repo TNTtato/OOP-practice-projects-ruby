@@ -55,15 +55,4 @@ end
 warrior1 = Viking.create_warrior(Viking.random_name)
 warrior2 = Viking.create_warrior(Viking.random_name)
 
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
-warrior2.attack(warrior1)
+10.times {warrior1.attack(warrior2)}
