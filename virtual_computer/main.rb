@@ -12,6 +12,7 @@ class Computer
     time = Time.now
     file = File.new(filename, time)
     @files[filename] = file
+    file.computer = self
     self.update_files_attributes
     puts "A new file named '#{filename}' at #{time} was created by '#{@username}'."
     puts "\n-->If you want to modify this file, use #modify_file('#{filename}')\n\n"
@@ -81,12 +82,19 @@ class Computer
 end
 
 class File
+  attr_accessor :computer
+  @@files = {}
+  def self.show_files_in_class
+    p @@files
+  end
+
   def initialize(filename, time)
     @filename = filename
     @content = ''
     @creation_time = time
     @modification_time = time
     @type = file_type(filename)
+    @@files[filename] = self
   end
 
   def file_type(filename)
@@ -106,23 +114,22 @@ class File
    { 'name' => @filename,
       'creation date' => @creation_time,
       'last modification' => @modification_time,
-      'data type' => @type }
+      'data type' => @type,
+      'ubication' => self.computer }
   end
 end
-my_computer = Computer.new('Gustavo', 'Alonso18!')
-my_computer.create('test.txt')
-my_computer.create('test2.txt')
 
-my_computer.list_files
+user1 = Computer.new('gustavo', 'Alonso18!')
+user2 = Computer.new('alonso', '12345')
+user3 = Computer.new('pedro', '344434')
 
-my_computer.modify_a_file('test2.txt')
+n = 0
+3.times {user1.create("prueba#{n += 1}.txt")}
+3.times {user2.create("prueba#{n += 1}.txt")}
+3.times {user3.create("prueba#{n += 1}.txt")}
 
-my_computer.rename_a_file('test2.txt', 'test_file.txt')
+File.show_files_in_class
 
-my_computer.list_files
-
-my_computer.modify_a_file('test_file.txt')
-
-my_computer.list_files
-
-my_computer.show_a_file_attributes('test_file.txt')
+user1.show_a_file_attributes('prueba1.txt')
+user2.show_a_file_attributes('prueba4.txt')
+user3.show_a_file_attributes('prueba7.txt')
